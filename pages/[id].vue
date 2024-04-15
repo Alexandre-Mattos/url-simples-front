@@ -2,12 +2,12 @@
 
 <script>
 export default {
-  async created() {
-    await this.redirect()
+  created() {
+    this.redirect()
   },
 
   methods: {
-    async redirect() {
+    redirect() {
       window.location.href = `${this.$config.app.backendUrl}/${this.$route.params.id}`
     },
   },
