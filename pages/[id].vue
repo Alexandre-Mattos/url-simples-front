@@ -2,7 +2,7 @@
 
 <script>
 export default {
-  created() {
+  mounted() {
     this.redirect()
   },
 
