@@ -8,9 +8,7 @@ export default {
 
   methods: {
     async redirect() {
-      this.$router.push({
-        path: `${this.$config.app.backendUrl}/${this.$route.params.id}`,
-      })
+      window.location.href = `${this.$config.app.backendUrl}/${this.$route.params.id}`
     },
   },
 }
