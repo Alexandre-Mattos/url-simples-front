@@ -94,7 +94,7 @@ import axios from 'axios'
 export default {
   data: () => ({
     originalUrl: '',
-    newUrls: ['a'],
+    newUrls: [],
     loading: false,
     rules: [
       (value) => {
