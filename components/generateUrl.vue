@@ -20,26 +20,28 @@
           <v-sheet width="100%" class="mx-auto my-4">
             <v-form @submit.prevent="submit">
               <v-sheet class="d-flex">
-                <v-text-field
-                  :rules="rules"
-                  v-model="originalUrl"
-                  label="Cole o link aqui"
-                  variant="solo-filled"
-                />
-                <v-btn
-                  class="ml-4"
-                  type="submit"
-                  height="56"
-                  width="140"
-                  :loading="loading"
-                  :disabled="!originalUrl"
-                  :style="{
-                    background: 'linear-gradient(to right, #4568dc, #b06ab3)',
-                    color: 'white',
-                  }"
-                >
-                  GERAR LINK
-                </v-btn>
+                <v-row no-gutters>
+                  <v-col cols="10" xs="12" class="pr-4">
+                    <v-text-field
+                      :rules="rules"
+                      v-model="originalUrl"
+                      label="Cole o link aqui"
+                      variant="solo-filled"
+                    />
+                  </v-col>
+                  <v-col cols="2" xs="12">
+                    <v-btn
+                      type="submit"
+                      height="6vh"
+                      width="14vh"
+                      :loading="loading"
+                      :disabled="!originalUrl"
+                      class="btn-color"
+                    >
+                      GERAR LINK
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-sheet>
             </v-form>
           </v-sheet>
@@ -54,30 +56,22 @@
             </v-text-field>
 
             <v-btn
-              class="mt-4 ml-4"
+              class="mt-4 ml-4 btn-color"
               color="blue"
               type="submit"
               width="5%"
               @click="copy(newUrl)"
-              :style="{
-                background: 'linear-gradient(to right, #4568dc, #b06ab3)',
-                color: 'white',
-              }"
             >
               <v-icon>
                 mdi-content-copy
               </v-icon>
             </v-btn>
             <v-btn
-              class="mt-4 ml-3"
+              class="mt-4 ml-3 btn-color"
               color="red"
               type="button"
               width="5%"
               @click="removerUrl(index)"
-              :style="{
-                background: 'linear-gradient(to right, #4568dc, #b06ab3)',
-                color: 'white',
-              }"
             >
               <v-icon>
                 mdi-delete
@@ -158,6 +152,8 @@ export default {
 }
 
 .btn-color {
+  background: linear-gradient(to right, #4568dc, #b06ab3);
+  color: white;
 }
 
 .custom-elevation {
