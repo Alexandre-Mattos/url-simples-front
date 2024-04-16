@@ -6,7 +6,7 @@
         align-self="center"
         class="d-flex flex-column align-center"
       >
-        <v-sheet class="d-flex justify-center" height="15vh">
+        <v-sheet class="d-flex justify-center card" height="15vh">
           <h1>
             Use links menores no seu dia a dia com Curtinho!
           </h1>
@@ -19,24 +19,25 @@
           <h2>Insira um link para encurtar:</h2>
           <v-sheet width="100%" class="mx-auto my-4">
             <v-form @submit.prevent="submit">
-              <v-sheet class="d-flex">
-                <v-row no-gutters>
-                  <v-col cols="10" xs="12" class="pr-4">
+              <v-sheet>
+                <v-row class="d-flex flex-wrap">
+                  <v-col cols="12" lg="10" class="pr-4">
                     <v-text-field
                       :rules="rules"
                       v-model="originalUrl"
                       label="Cole o link aqui"
+                      placeholder="https://curtinho.com"
                       variant="solo-filled"
+                      class="text-wrap"
                     />
                   </v-col>
-                  <v-col cols="2" xs="12">
+
+                  <v-col cols="12" lg="2" class="pr-4">
                     <v-btn
                       type="submit"
-                      height="6vh"
-                      width="14vh"
                       :loading="loading"
                       :disabled="!originalUrl"
-                      class="btn-color"
+                      class="btn-color btn-size"
                     >
                       GERAR LINK
                     </v-btn>
@@ -51,32 +52,35 @@
             :key="index"
             class="my-4 d-flex"
           >
-            <v-text-field variant="solo-filled" class="mt-2 col-3" readonly>
-              {{ newUrl }}
-            </v-text-field>
-
-            <v-btn
-              class="mt-4 ml-4 btn-color"
-              color="blue"
-              type="submit"
-              width="5%"
-              @click="copy(newUrl)"
-            >
-              <v-icon>
-                mdi-content-copy
-              </v-icon>
-            </v-btn>
-            <v-btn
-              class="mt-4 ml-3 btn-color"
-              color="red"
-              type="button"
-              width="5%"
-              @click="removerUrl(index)"
-            >
-              <v-icon>
-                mdi-delete
-              </v-icon>
-            </v-btn>
+            <v-row class="flex-wrap">
+              <v-col cols="8">
+                <v-text-field variant="solo-filled" class="mt-2" readonly>
+                  {{ newUrl }}
+                </v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-btn
+                  class="mt-4 btn-color"
+                  type="submit"
+                  width="5%"
+                  @click="copy(newUrl)"
+                >
+                  <v-icon>
+                    mdi-content-copy
+                  </v-icon>
+                </v-btn>
+                <v-btn
+                  class="mt-4 ml-2 btn-color"
+                  type="button"
+                  width="5%"
+                  @click="removerUrl(index)"
+                >
+                  <v-icon>
+                    mdi-delete
+                  </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-sheet>
         </v-sheet>
       </v-col>
@@ -90,13 +94,11 @@ import axios from 'axios'
 export default {
   data: () => ({
     originalUrl: '',
-    newUrls: [],
+    newUrls: ['a'],
     loading: false,
     rules: [
       (value) => {
         if (value) return true
-
-        return 'Insira a url'
       },
     ],
   }),
@@ -145,18 +147,51 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.custom-border {
-  border-radius: 24px;
+  min-width: 60vw;
 }
 
 .btn-color {
   background: linear-gradient(to right, #4568dc, #b06ab3);
   color: white;
 }
+.btn-size {
+  font-size: 0.8em !important;
+  height: 73%;
+  width: 100%;
+  min-width: 100%;
+
+  @media screen and (max-width: 1280px) {
+    font-size: 0.7em;
+    height: 56px;
+  }
+}
+
+.card {
+  font-size: 0.7em;
+}
+.custom-border {
+  border-radius: 24px;
+}
 
 .custom-elevation {
   box-shadow: 0 2px 12px rgba(121, 121, 121, 0.2);
+}
+
+.text-wrap {
+  min-width: 100%;
+}
+
+h1 {
+  @media screen and (max-width: 1280px) {
+    font-size: 2em;
+    height: 56px;
+  }
+}
+
+h2 {
+  @media screen and (max-width: 1280px) {
+    font-size: 1em;
+    height: 56px;
+  }
 }
 </style>
