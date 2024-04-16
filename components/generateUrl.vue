@@ -1,13 +1,21 @@
 <template>
   <v-container class="body">
     <v-row no-gutters>
-      <v-col cols="12" align-self="center">
+      <v-col
+        cols="12"
+        align-self="center"
+        class="d-flex flex-column align-center"
+      >
         <v-sheet class="d-flex justify-center" height="15vh">
           <h1>
             Use links menores no seu dia a dia com Curtinho!
           </h1>
         </v-sheet>
-        <v-sheet class="pa-8 custom-elevation custom-border">
+        <v-sheet
+          class="pa-8 custom-elevation custom-border"
+          width="70%"
+          align-center
+        >
           <h2>Insira um link para encurtar:</h2>
           <v-sheet width="100%" class="mx-auto my-4">
             <v-form @submit.prevent="submit">
@@ -21,11 +29,14 @@
                 <v-btn
                   class="ml-4"
                   type="submit"
-                  color="blue"
                   height="56"
                   width="140"
                   :loading="loading"
                   :disabled="!originalUrl"
+                  :style="{
+                    background: 'linear-gradient(to right, #4568dc, #b06ab3)',
+                    color: 'white',
+                  }"
                 >
                   GERAR LINK
                 </v-btn>
@@ -48,6 +59,10 @@
               type="submit"
               width="5%"
               @click="copy(newUrl)"
+              :style="{
+                background: 'linear-gradient(to right, #4568dc, #b06ab3)',
+                color: 'white',
+              }"
             >
               <v-icon>
                 mdi-content-copy
@@ -59,6 +74,10 @@
               type="button"
               width="5%"
               @click="removerUrl(index)"
+              :style="{
+                background: 'linear-gradient(to right, #4568dc, #b06ab3)',
+                color: 'white',
+              }"
             >
               <v-icon>
                 mdi-delete
@@ -129,12 +148,16 @@ export default {
 <style scoped>
 .body {
   height: 90vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .custom-border {
   border-radius: 24px;
+}
+
+.btn-color {
 }
 
 .custom-elevation {
