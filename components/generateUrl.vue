@@ -53,14 +53,18 @@
             class="my-4 d-flex"
           >
             <v-row class="flex-wrap">
-              <v-col cols="8">
-                <v-text-field variant="solo-filled" class="mt-2" readonly>
+              <v-col cols="12" lg="8">
+                <v-text-field
+                  variant="solo-filled"
+                  class="mt-2 text-wrap"
+                  readonly
+                >
                   {{ newUrl }}
                 </v-text-field>
               </v-col>
-              <v-col cols="4">
+              <v-col cols="12" lg="4">
                 <v-btn
-                  class="mt-4 btn-color"
+                  class="mt-4 btn-color sub-button"
                   type="submit"
                   width="5%"
                   @click="copy(newUrl)"
@@ -94,7 +98,7 @@ import axios from 'axios'
 export default {
   data: () => ({
     originalUrl: '',
-    newUrls: [],
+    newUrls: ['https://www.curtinho.com/s12315'],
     loading: false,
     rules: [
       (value) => {
@@ -179,6 +183,7 @@ export default {
 
 .text-wrap {
   min-width: 100%;
+  overflow: hidden;
 }
 
 h1 {
