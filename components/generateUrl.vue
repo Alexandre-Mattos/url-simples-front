@@ -98,7 +98,7 @@ import axios from 'axios'
 export default {
   data: () => ({
     originalUrl: '',
-    newUrls: ['https://www.curtinho.com/s12315'],
+    newUrls: [],
     loading: false,
     rules: [
       (value) => {
