@@ -28,17 +28,17 @@
           </v-col>
           
           <v-col cols="2" class="d-none d-lg-flex" v-if="showSideAds">
-            <v-container class="px-0">
-              <div class="sticky-ad d-flex justify-end align-start">
-                <AdSense 
-                  adId="ad-right-sidebar" 
-                  height="600" 
-                  width="160" 
-                  format="vertical" 
-                />
-              </div>
-            </v-container>
-          </v-col>
+          <v-container class="px-0">
+            <div class="sticky-ad d-flex justify-end align-start">
+              <AdSense 
+                adId="ad-right-sidebar" 
+                height="600" 
+                width="160" 
+                format="vertical" 
+              />
+            </div>
+          </v-container>
+        </v-col>
 
         </v-row>
       </v-container>
@@ -46,7 +46,7 @@
     
     <v-footer app padless>
       <v-card flat tile width="100%" class="text-center">
-        <AdSense 
+        <!-- <AdSense 
           v-if="showFooterAd"
           adId="ad-before-footer" 
           height="90" 
@@ -55,7 +55,7 @@
           class="mx-auto my-2 ad-responsive"
         />
         
-        <!-- <v-card-text>
+        <v-card-text>
           <v-btn
             v-for="icon in socialIcons"
             :key="icon.icon"
