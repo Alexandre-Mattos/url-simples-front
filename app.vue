@@ -7,9 +7,11 @@
 </template>
 
 <script setup>
-import { useHead } from "#imports";
+import { useHead, useRuntimeConfig } from "#imports";
+
+const config = useRuntimeConfig();
 
 useHead({
-  script: this.$config.app.head.script
+  script: config.app.head.script,
 });
 </script>
