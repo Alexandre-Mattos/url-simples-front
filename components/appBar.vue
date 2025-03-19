@@ -3,7 +3,7 @@
     <div class="d-flex align-center">
       <v-img
         alt="Curtinho Logo"
-        class="shrink mr-2"
+        class="shrink mr-2 ml-15"
         contain
         :src="logoSrc"
         transition="scale-transition"
@@ -17,7 +17,7 @@
       <v-icon>{{ isDarkMode ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
     </v-btn>
     
-    <v-btn icon class="on-primary" @click="showStats = true">
+    <v-btn icon class="on-primary" @click="openStats">
       <v-icon>mdi-chart-bar</v-icon>
     </v-btn>
     
@@ -25,8 +25,7 @@
       <v-card>
         <v-card-title class="headline">Estatísticas</v-card-title>
         <v-card-text>
-          <p>Links encurtados: {{ totalLinks }}</p>
-          <p>Links criados hoje: {{ todayLinks }}</p>
+          <p>Links gerados hoje: {{ todayLinks }}</p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -40,6 +39,7 @@
 <script>
 import logoImage from '~/assets/curtinho_w_icon_without_border.png'
 import { eventBus } from '~/utils/eventBus'
+import axios from 'axios'  // Make sure to import axios
 
 export default {
   name: 'AppBar',
@@ -47,8 +47,7 @@ export default {
     return {
       logoSrc: logoImage,
       showStats: false,
-      totalLinks: 1254, 
-      todayLinks: 42    
+      todayLinks: 0    
     }
   },
   computed: {
@@ -61,7 +60,30 @@ export default {
     eventBus.setDarkMode(savedDarkMode)
     this.applyTheme()
   },
+  watch: {
+    showStats(newValue) {
+      if (newValue === true) {
+        this.fetchLinksToday()
+      }
+    }
+  },
   methods: {
+    openStats() {
+      this.showStats = true
+      this.fetchLinksToday()
+    },
+    async fetchLinksToday() {
+      try {
+        const response = await axios.post(
+          `${this.$config.app.backendUrl}/count-links-today`,
+        )
+        
+        this.todayLinks = response.data.count
+      } catch (err) {
+        console.log(err)
+        this.showSnackbar('Erro ao buscar estatísticas. Tente novamente.', 'error')
+      }
+    },
     toggleTheme() {
       eventBus.setDarkMode(!eventBus.isDarkMode)
       localStorage.setItem('darkMode', eventBus.isDarkMode)
@@ -69,6 +91,9 @@ export default {
     },
     applyTheme() {
       this.$vuetify.theme.global.name = eventBus.isDarkMode ? 'darkTheme' : 'lightTheme'
+    },
+    showSnackbar(message, color) {
+      console.error(message)
     }
   }
 }

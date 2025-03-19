@@ -1,20 +1,34 @@
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 export default defineNuxtConfig({
+  app: {
+    head: {
+      script: [
+        {
+          hid: "adsbygoogle",
+          src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
+          "data-ad-client": process.env.ADSENSE_CLIENT_ID,
+          async: true,
+          crossorigin: "anonymous",
+        },
+      ],
+    },
+  },
   build: {
-    transpile: ['vuetify'],
+    transpile: ["vuetify"],
   },
   runtimeConfig: {
     app: {
       backendUrl: process.env.BACKEND_URL,
+      adsenseClient: process.env.ADSENSE_CLIENT_ID,
     },
   },
   modules: [
     (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) => {
+      nuxt.hooks.hook("vite:extendConfig", (config) => {
         // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
     },
   ],
   vite: {
@@ -24,4 +38,4 @@ export default defineNuxtConfig({
       },
     },
   },
-})
+});

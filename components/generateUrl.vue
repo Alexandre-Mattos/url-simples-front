@@ -6,6 +6,7 @@
         align-self="center"
         class="d-flex flex-column align-center"
       >
+
         <v-sheet class="d-flex justify-center card mb-6" height="15vh">
           <h1 class="text-center">
             Use links menores no seu dia a dia com Curtinho!
@@ -138,9 +139,17 @@
             <v-icon color="primary" size="36">mdi-rocket-launch-outline</v-icon>
           </div>
         </v-sheet>
+
+        <AdSense 
+          adId="ad-banner-top" 
+          height="90" 
+          width="728" 
+          format="horizontal" 
+          top
+          class="mb-2 ad-responsive"
+        />
       </v-col>
     </v-row>
-    
     <v-snackbar
       v-model="snackbar.show"
       :color="snackbar.color"
@@ -163,9 +172,13 @@
 <script>
 import axios from 'axios'
 import { eventBus } from '~/utils/eventBus'
+import AdSense from '@/components/adSense.vue'
 
 export default {
   name: 'GenerateUrl',
+  components: {
+    AdSense 
+  },
   data: () => ({
     originalUrl: '',
     newUrls: [],
@@ -208,7 +221,6 @@ export default {
   },
   
   mounted() {
-    // Carregar histórico do localStorage
     const savedUrls = localStorage.getItem('curtinho_history')
     if (savedUrls) {
       try {
@@ -231,19 +243,12 @@ export default {
           {
             url: this.originalUrl,
           },
-          {
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Headers': '*',
-            },
-          }
         )
         
         this.loading = false
         this.originalUrl = ''
         this.newUrls.unshift(response.data)
         
-        // Salvar no localStorage
         localStorage.setItem('curtinho_history', JSON.stringify(this.newUrls))
         
         this.showSnackbar('Link encurtado com sucesso!', 'success')
@@ -372,6 +377,15 @@ export default {
 .info-card {
   border: 1px dashed rgba(69, 104, 220, 0.3);
   background-color: rgba(69, 104, 220, 0.05);
+}
+
+.ad-responsive {
+  width: 100%;
+  max-width: 728px;
+
+  @media screen and (max-width: 768px) {
+    max-width: 320px;
+  }
 }
 
 h1 {
