@@ -6,10 +6,9 @@ export default defineNuxtConfig({
       script: [
         {
           hid: "adsbygoogle",
-          src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
-          "data-ad-client": process.env.ADSENSE_CLIENT_ID,
+          src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.ADSENSE_CLIENT_ID}
+     crossorigin="anonymous`,
           async: true,
-          crossorigin: "anonymous",
         },
       ],
     },
