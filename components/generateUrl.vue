@@ -6,13 +6,22 @@
         align-self="center"
         class="d-flex flex-column align-center"
       >
-
-        <v-sheet class="d-flex justify-center card mb-6" height="15vh">
-          <h1 class="text-center">
-            Use links menores no seu dia a dia com Curtinho!
-          </h1>
+      
+        <v-sheet class="mt-6 mb-6 pa-4 custom-border info-card" width="80%" max-width="900px">
+          <div class="d-flex align-center">
+            <div>
+              <h3 class="text-subtitle-1 font-weight-bold mb-1">Por que usar o Curtinho?</h3>
+              <p class="text-body-2">
+                Links curtos são mais fáceis de compartilhar, memorizar e ficam melhores em suas mensagens.
+              </p>
+            </div>
+            <v-spacer></v-spacer>
+            <v-icon color="primary" size="36">mdi-rocket-launch-outline</v-icon>
+          </div>
         </v-sheet>
-        
+
+        <StatsCounter @error="showSnackbar" class="mb-4" />
+
         <v-sheet
           class="pa-8 custom-elevation custom-border"
           width="80%"
@@ -127,19 +136,7 @@
           </v-expand-transition>
         </v-sheet>
         
-        <v-sheet class="mt-6 pa-4 custom-border info-card" width="80%" max-width="900px">
-          <div class="d-flex align-center">
-            <div>
-              <h3 class="text-subtitle-1 font-weight-bold mb-1">Por que usar o Curtinho?</h3>
-              <p class="text-body-2">
-                Links curtos são mais fáceis de compartilhar, memorizar e ficam melhores em suas mensagens.
-              </p>
-            </div>
-            <v-spacer></v-spacer>
-            <v-icon color="primary" size="36">mdi-rocket-launch-outline</v-icon>
-          </div>
-        </v-sheet>
-
+        
         <AdSense 
           adId="ad-banner-top" 
           height="90" 
@@ -173,11 +170,13 @@
 import axios from 'axios'
 import { eventBus } from '~/utils/eventBus'
 import AdSense from '@/components/adSense.vue'
+import StatsCounter from '@/components/statsCounter.vue'
 
 export default {
   name: 'GenerateUrl',
   components: {
-    AdSense 
+    AdSense,
+    StatsCounter
   },
   data: () => ({
     originalUrl: '',

@@ -16,37 +16,19 @@
     <v-btn icon @click="toggleTheme" class="on-primary">
       <v-icon>{{ isDarkMode ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
     </v-btn>
-    
-    <v-btn icon class="on-primary" @click="openStats">
-      <v-icon>mdi-chart-bar</v-icon>
-    </v-btn>
-    
-    <v-dialog v-model="showStats" max-width="500">
-      <v-card>
-        <v-card-title class="headline">Estatísticas</v-card-title>
-        <v-card-text>
-          <p>Links gerados hoje: {{ todayLinks }}</p>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showStats = false">Fechar</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-app-bar>
 </template>
 
 <script>
 import logoImage from '~/assets/curtinho_w_icon_without_border.png'
 import { eventBus } from '~/utils/eventBus'
-import axios from 'axios'  // Make sure to import axios
+import axios from 'axios'  
 
 export default {
   name: 'AppBar',
   data() {
     return {
       logoSrc: logoImage,
-      showStats: false,
       todayLinks: 0    
     }
   },
@@ -60,16 +42,8 @@ export default {
     eventBus.setDarkMode(savedDarkMode)
     this.applyTheme()
   },
-  watch: {
-    showStats(newValue) {
-      if (newValue === true) {
-        this.fetchLinksToday()
-      }
-    }
-  },
   methods: {
     openStats() {
-      this.showStats = true
       this.fetchLinksToday()
     },
     async fetchLinksToday() {
