@@ -59,6 +59,14 @@ export default {
   methods: {
     loadAd() {
       try {
+        if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${this.adClient}`;
+          script.crossOrigin = 'anonymous';
+          document.head.appendChild(script);
+        }
+        
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (e) {
         console.error('Erro ao carregar anúncio:', e);
