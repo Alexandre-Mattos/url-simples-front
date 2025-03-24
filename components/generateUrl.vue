@@ -137,7 +137,14 @@
         </v-sheet>
         
         
-        <AdSenseAuto :adClient="$config.app.adsenseClient" />
+        <AdSense 
+          adId="ad-banner-top" 
+          height="90" 
+          width="728" 
+          format="horizontal" 
+          top
+          class="mb-2 ad-responsive"
+        />
       </v-col>
     </v-row>
     <v-snackbar
