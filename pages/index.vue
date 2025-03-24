@@ -7,12 +7,7 @@
           <v-col cols="2" class="d-none d-lg-flex" v-if="showSideAds">
             <v-container class="px-0">
               <div class="sticky-ad d-flex justify-start align-start">
-                <!-- <AdSense 
-                  adId="ad-left-sidebar" 
-                  height="600" 
-                  width="160" 
-                  format="vertical" 
-                /> -->
+                <AdSenseAuto :adClient="$config.app.adsenseClient" />
               </div>
             </v-container>
           </v-col>
@@ -30,12 +25,7 @@
           <v-col cols="2" class="d-none d-lg-flex" v-if="showSideAds">
           <v-container class="px-0">
             <div class="sticky-ad d-flex justify-end align-start">
-              <!-- <AdSense 
-                adId="ad-right-sidebar" 
-                height="600" 
-                width="160" 
-                format="vertical" 
-              /> -->
+              <AdSenseAuto :adClient="$config.app.adsenseClient" />
             </div>
           </v-container>
         </v-col>
