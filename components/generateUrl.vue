@@ -6,7 +6,7 @@
         align-self="center"
         class="d-flex flex-column align-center"
       >
-      
+
         <v-sheet class="mt-6 mb-6 pa-4 custom-border info-card" width="80%" max-width="900px">
           <div class="d-flex align-center">
             <div>
@@ -137,14 +137,14 @@
         </v-sheet>
         
         
-        <AdSense 
+        <!-- <AdSense 
           adId="ad-banner-top" 
           height="90" 
           width="728" 
           format="horizontal" 
           top
           class="mb-2 ad-responsive"
-        />
+        /> -->
       </v-col>
     </v-row>
     <v-snackbar
@@ -191,7 +191,7 @@ export default {
       timeout: 3000
     },
     urlRules: [
-      v => !!v || 'URL é obrigatória',
+      v => !!v ?? 'URL é obrigatória',
       v => {
         if (!v) return true
         try {
