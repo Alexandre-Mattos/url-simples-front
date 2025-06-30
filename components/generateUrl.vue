@@ -136,17 +136,20 @@
           </v-expand-transition>
         </v-sheet>
         
-        
-        <AdSense 
-          adId="ad-banner-top" 
-          height="90" 
-          width="728" 
-          format="horizontal" 
-          top
-          class="mb-2 ad-responsive"
-        />
+        <div class="ad-container mt-4">
+          <div class="ad-label">Anúncio</div>
+          <ins
+            class="adsbygoogle ad-bottom"
+            style="display:block"
+            data-ad-client="ca-pub-9345726529573024"
+            data-ad-slot="1122334455"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+        </div>
       </v-col>
     </v-row>
+    
     <v-snackbar
       v-model="snackbar.show"
       :color="snackbar.color"
@@ -169,13 +172,11 @@
 <script>
 import axios from 'axios'
 import { eventBus } from '~/utils/eventBus'
-import AdSense from '@/components/adSense.vue'
 import StatsCounter from '@/components/statsCounter.vue'
 
 export default {
   name: 'GenerateUrl',
   components: {
-    AdSense,
     StatsCounter
   },
   data: () => ({
@@ -184,6 +185,7 @@ export default {
     loading: false,
     copiedIndex: null,
     expandedIndex: null,
+    adsLoaded: false,
     snackbar: {
       show: false,
       text: '',
@@ -228,9 +230,26 @@ export default {
         console.error('Erro ao carregar histórico:', e)
       }
     }
+    
+    this.loadAds()
   },
 
   methods: {
+    loadAds() {
+      this.$nextTick(() => {
+        try {
+          const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+          ads.forEach(() => {
+            if (this.$loadAd) {
+              this.$loadAd();
+            }
+          });
+        } catch (e) {
+          console.error('Erro ao carregar anúncios:', e);
+        }
+      });
+    },
+
     async submit() {
       if (!this.$refs.form.validate()) return
       
@@ -251,6 +270,12 @@ export default {
         localStorage.setItem('curtinho_history', JSON.stringify(this.newUrls))
         
         this.showSnackbar('Link encurtado com sucesso!', 'success')
+        
+        if (this.newUrls.length === 1) {
+          setTimeout(() => {
+            this.loadAds()
+          }, 100)
+        }
       } catch (err) {
         console.log(err)
         this.loading = false
@@ -400,6 +425,31 @@ h2 {
   
   @media screen and (max-width: 1280px) {
     font-size: 1.2em;
+  }
+}
+
+.ad-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.ad-label {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.adsbygoogle {
+  display: block !important;
+  min-height: 280px;
+}
+
+@media (max-width: 768px) {
+  .adsbygoogle {
+    min-height: 250px;
   }
 }
 </style>

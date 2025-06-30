@@ -4,17 +4,20 @@
     <v-main>
       <v-container fluid class="px-0 py-0">
         <v-row no-gutters>
-          <v-col cols="2" class="d-none d-lg-flex" v-if="showSideAds">
-            <v-container class="px-0">
-              <div class="sticky-ad d-flex justify-start align-start">
-                <AdSense 
-                  adId="ad-left-sidebar" 
-                  height="600" 
-                  width="160" 
-                  format="vertical" 
-                />
+          <v-col cols="2" class="d-none d-lg-flex">
+            <div class="sticky-ad">
+              <div class="ad-container">
+                <div class="ad-label" align-center>Anúncio</div>
+                <ins
+                  class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-9345726529573024"
+                  data-ad-slot="1111111111"
+                  data-ad-format="vertical"
+                  data-full-width-responsive="true"
+                ></ins>
               </div>
-            </v-container>
+            </div>
           </v-col>
           
           <v-col cols="12" lg="8">
@@ -27,18 +30,21 @@
             </v-container>
           </v-col>
           
-          <v-col cols="2" class="d-none d-lg-flex" v-if="showSideAds">
-          <v-container class="px-0">
-            <div class="sticky-ad d-flex justify-end align-start">
-              <AdSense 
-                adId="ad-right-sidebar" 
-                height="600" 
-                width="160" 
-                format="vertical" 
-              />
+          <v-col cols="2" class="d-none d-lg-flex">
+            <div class="sticky-ad">
+              <div class="ad-container">
+                <div class="ad-label">Anúncio</div>
+                <ins
+                  class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-9345726529573024"
+                  data-ad-slot="2222222222"
+                  data-ad-format="vertical"
+                  data-full-width-responsive="true"
+                ></ins>
+              </div>
             </div>
-          </v-container>
-        </v-col>
+          </v-col>
 
         </v-row>
       </v-container>
@@ -78,14 +84,12 @@
 <script>
 import AppBar from '@/components/appBar.vue'
 import GenerateUrl from '@/components/generateUrl.vue'
-import AdSense from '@/components/adSense.vue'
 
 export default {
   name: 'IndexPage',
   components: {
     AppBar,
     GenerateUrl,
-    AdSense
   },
   data() {
     return {
@@ -95,26 +99,31 @@ export default {
         { icon: 'mdi-instagram' },
         { icon: 'mdi-linkedin' }
       ],
-      showSideAds: true,
-      showFooterAd: true
     }
   },
   mounted() {
-    if (process.env.NODE_ENV !== 'production') {
-      this.showSideAds = false;
-      this.showFooterAd = false;
-    }
-    
-    this.checkScreenSize();
-    window.addEventListener('resize', this.checkScreenSize);
+    this.$nextTick(() => {
+      this.loadSideAds();
+    });
   },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.checkScreenSize);
-  },
+ 
   methods: {
-    checkScreenSize() {
-      this.showSideAds = window.innerWidth >= 1264; 
-    }
+    loadSideAds() {
+      this.$nextTick(() => {
+        try {
+          const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
+          ads.forEach(() => {
+            if (window.$loadAd) {
+              window.$loadAd();
+            }
+          });
+        } catch (e) {
+          console.error('Erro ao carregar anúncios laterais:', e);
+        }
+      });
+    },
+    
+  
   }
 }
 </script>
@@ -140,5 +149,26 @@ export default {
   @media screen and (max-width: 768px) {
     max-width: 320px;
   }
+}
+
+.ad-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.ad-label {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.adsbygoogle {
+  display: block !important;
+  width: 160px;
+  height: 600px;
 }
 </style>
