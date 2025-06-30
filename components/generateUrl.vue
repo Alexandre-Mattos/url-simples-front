@@ -40,10 +40,12 @@
                       label="Cole o link aqui"
                       placeholder="https://exemplo-de-um-link-muito-longo.com/pagina"
                       :variant="'outlined'"
-                      class="text-wrap"
+                      class="text-wrap url-input"
                       prepend-inner-icon="mdi-link-variant"
                       clearable
                       @keyup.enter="submit"
+                      :error-messages="[]"
+                      validate-on="submit"
                     />
                   </v-col>
 
@@ -142,7 +144,7 @@
             class="adsbygoogle ad-bottom"
             style="display:block"
             data-ad-client="ca-pub-9345726529573024"
-            data-ad-slot="1122334455"
+            data-ad-slot="1636237991"
             data-ad-format="auto"
             data-full-width-responsive="true"
           ></ins>
@@ -179,34 +181,42 @@ export default {
   components: {
     StatsCounter
   },
-  data: () => ({
-    originalUrl: '',
-    newUrls: [],
-    loading: false,
-    copiedIndex: null,
-    expandedIndex: null,
-    adsLoaded: false,
-    snackbar: {
-      show: false,
-      text: '',
-      color: 'success',
-      timeout: 3000
-    },
-    urlRules: [
-      v => !!v ?? 'URL é obrigatória',
-      v => {
-        if (!v) return true
-        try {
-          new URL(v)
-          return true
-        } catch (e) {
-          return 'URL inválida. Inclua http:// ou https://'
-        }
+  data() {
+    return {
+      originalUrl: '',
+      newUrls: [],
+      loading: false,
+      copiedIndex: null,
+      expandedIndex: null,
+      adsLoaded: false,
+      showValidation: false,
+      snackbar: {
+        show: false,
+        text: '',
+        color: 'success',
+        timeout: 3000
       }
-    ]
-  }),
+    }
+  },
   
   computed: {
+    urlRules() {
+      return [
+        v => {
+          if (!this.showValidation) return true
+          return !!v || 'URL é obrigatória'
+        },
+        v => {
+          if (!this.showValidation || !v) return true
+          try {
+            new URL(v)
+            return true
+          } catch (e) {
+            return 'URL inválida. Inclua http:// ou https://'
+          }
+        }
+      ]
+    },
     isValidUrl() {
       if (!this.originalUrl) return false
       try {
@@ -251,6 +261,7 @@ export default {
     },
 
     async submit() {
+      this.showValidation = true
       if (!this.$refs.form.validate()) return
       
       this.loading = true
@@ -451,5 +462,23 @@ h2 {
   .adsbygoogle {
     min-height: 250px;
   }
+}
+
+.url-input {
+  min-height: 56px;
+}
+
+.url-input :deep(.v-field) {
+  min-height: 56px;
+}
+
+.url-input :deep(.v-field__input) {
+  min-height: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.url-input :deep(.v-field__prepend-inner) {
+  padding-top: 12px;
 }
 </style>

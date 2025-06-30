@@ -4,7 +4,7 @@
     <v-main>
       <v-container fluid class="px-0 py-0">
         <v-row no-gutters>
-          <v-col cols="2" class="d-none d-lg-flex">
+          <v-col cols="2" class="d-none d-lg-flex justify-center">
             <div class="sticky-ad">
               <div class="ad-container">
                 <div class="ad-label" align-center>Anúncio</div>
@@ -12,7 +12,7 @@
                   class="adsbygoogle"
                   style="display:block"
                   data-ad-client="ca-pub-9345726529573024"
-                  data-ad-slot="1111111111"
+                  data-ad-slot="6805352939"
                   data-ad-format="vertical"
                   data-full-width-responsive="true"
                 ></ins>
@@ -38,7 +38,7 @@
                   class="adsbygoogle"
                   style="display:block"
                   data-ad-client="ca-pub-9345726529573024"
-                  data-ad-slot="2222222222"
+                  data-ad-slot="6351725664"
                   data-ad-format="vertical"
                   data-full-width-responsive="true"
                 ></ins>
@@ -139,7 +139,7 @@ export default {
   top: 80px;
   height: auto;
   min-height: 600px;
-  padding: 16px 0;
+  padding: 16px 12px;
 }
 
 .ad-responsive {
