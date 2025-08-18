@@ -1,194 +1,208 @@
 <template>
-  <v-container class="body">
-    <v-row no-gutters>
-      <v-col
-        cols="12"
-        align-self="center"
-        class="d-flex flex-column align-center"
-      >
+  <div class="url-shortener">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Encurte seus links em
+          <span class="gradient-text">segundos</span>
+        </h1>
+        <p class="hero-subtitle">
+          Transforme URLs longas em links curtos, elegantes e fáceis de compartilhar
+        </p>
+      </div>
+    </div>
 
-        <v-sheet class="mt-6 mb-6 pa-4 custom-border info-card" width="80%" max-width="900px">
-          <div class="d-flex align-center">
-            <div>
-              <h3 class="text-subtitle-1 font-weight-bold mb-1">Por que usar o Curtinho?</h3>
-              <p class="text-body-2">
-                Links curtos são mais fáceis de compartilhar, memorizar e ficam melhores em suas mensagens.
-              </p>
-            </div>
-            <v-spacer></v-spacer>
-            <v-icon color="primary" size="36">mdi-rocket-launch-outline</v-icon>
+    <!-- Stats Card -->
+    <div class="stats-section">
+      <div class="stats-card">
+        <div class="stats-content">
+          <div class="stat-item">
+            <div class="stat-number">{{ formatNumber(todayLinks) }}</div>
+            <div class="stat-label">Links criados hoje</div>
           </div>
-        </v-sheet>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Cliques rastreados</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Gratuito</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <StatsCounter @error="showSnackbar" class="mb-4" />
-
-        <v-sheet
-          class="pa-8 custom-elevation custom-border"
-          width="80%"
-          max-width="900px"
-          align-center
-        >
-          <h2 class="mb-">Insira um link para encurtar:</h2>
-          <v-sheet width="100%" class="mx-auto my-4">
-            <v-form @submit.prevent="submit" ref="form">
-              <v-sheet>
-                <v-row class="d-flex flex-wrap">
-                  <v-col cols="12" lg="10" class="pr-lg-4">
-                    <v-text-field
-                      :rules="urlRules"
-                      v-model="originalUrl"
-                      label="Cole o link aqui"
-                      placeholder="https://exemplo-de-um-link-muito-longo.com/pagina"
-                      :variant="'outlined'"
-                      class="text-wrap url-input"
-                      prepend-inner-icon="mdi-link-variant"
-                      clearable
-                      @keyup.enter="submit"
-                      :error-messages="[]"
-                      validate-on="submit"
-                    />
-                  </v-col>
-
-                  <v-col cols="12" lg="2" class="pr-lg-4">
-                    <v-btn
-                      type="submit"
-                      :loading="loading"
-                      :disabled="!isValidUrl"
-                      class="btn-color btn-size"
-                      elevation="2"
-                    >
-                      <v-icon left>mdi-link</v-icon>
-                      GERAR LINK
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-sheet>
-            </v-form>
-          </v-sheet>
-          
-          <v-expand-transition>
-            <div v-if="newUrls.length > 0">
-              <v-divider class="my-4" />
+    <!-- URL Shortener Form -->
+    <div class="shortener-section">
+      <div class="shortener-card">
+        <div class="form-container">
+          <v-form @submit.prevent="submit" ref="form">
+            <div class="input-group">
+              <div class="input-container">
+                <v-text-field
+                  v-model="originalUrl"
+                  :rules="urlRules"
+                  placeholder="Cole seu link aqui... https://exemplo.com/link-muito-longo"
+                  variant="outlined"
+                  class="url-input"
+                  hide-details="auto"
+                  @keyup.enter="submit"
+                >
+                  <template v-slot:prepend-inner>
+                    <v-icon color="primary" size="20">mdi-link-variant</v-icon>
+                  </template>
+                </v-text-field>
+              </div>
               
-              <v-sheet
-                v-for="(url, index) in newUrls"
-                :key="index"
-                class="my-4 url-item pa-2"
-                :class="{'dark-item': isDarkMode}"
-                rounded
+              <v-btn
+                type="submit"
+                :loading="loading"
+                :disabled="!isValidUrl"
+                class="shorten-btn"
+                size="large"
+                elevation="0"
               >
-                <v-row class="flex-wrap">
-                  <v-col cols="12" lg="8">
-                    <v-text-field
-                      :variant="'outlined'"
-                      class="mt-2 text-wrap"
-                      readonly
-                      :value="url"
-                      hide-details
-                    >
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12" lg="4" class="d-flex align-center">
-                    <v-btn
-                      class="mt-0 mt-lg-0 btn-color"
-                      @click="copy(url)"
-                      :disabled="copiedIndex === index"
-                    >
-                      <v-icon left>
-                        {{ copiedIndex === index ? 'mdi-check' : 'mdi-content-copy' }}
-                      </v-icon>
-                      {{ copiedIndex === index ? 'Copiado!' : 'Copiar' }}
-                    </v-btn>
-                    
-                    <v-btn
-                      class="mt-0 mt-lg-0 ml-2 btn-color-secondary"
-                      @click="openUrl(url)"
-                      icon
-                    >
-                      <v-icon>mdi-open-in-new</v-icon>
-                    </v-btn>
-                    
-                    <v-btn
-                      class="mt-0 mt-lg-0 ml-2 btn-color-secondary"
-                      @click="removerUrl(index)"
-                      icon
-                    >
-                      <v-icon>mdi-delete</v-icon>
-                    </v-btn>
-                  </v-col>
-                </v-row>
+                <v-icon left size="20">mdi-content-cut</v-icon>
+                Encurtar
+              </v-btn>
+            </div>
+          </v-form>
+        </div>
+
+        <!-- Results -->
+        <div v-if="newUrls.length > 0" class="results-section">
+          <div class="results-header">
+            <h3>Seus links encurtados</h3>
+            <v-btn 
+              v-if="newUrls.length > 1"
+              variant="text" 
+              size="small" 
+              @click="clearAll"
+              class="clear-btn"
+            >
+              <v-icon left size="16">mdi-delete-sweep</v-icon>
+              Limpar todos
+            </v-btn>
+          </div>
+
+          <div class="results-list">
+            <div 
+              v-for="(url, index) in newUrls" 
+              :key="index" 
+              class="result-item"
+            >
+              <div class="result-content">
+                <div class="result-url">
+                  <v-icon color="success" size="16" class="mr-2">mdi-check-circle</v-icon>
+                  <span class="short-url">{{ url }}</span>
+                </div>
                 
-                <v-expand-transition>
-                  <div v-if="expandedIndex === index" class="px-4 pb-2">
-                    <v-divider class="mb-2" />
-                    <p class="text-caption">
-                      Criado em: {{ formatDate(new Date()) }}
-                    </p>
-                  </div>
-                </v-expand-transition>
-              </v-sheet>
-              
-              <div class="text-center mt-4" v-if="newUrls.length > 1">
-                <v-btn text color="primary" @click="clearAll">
-                  <v-icon left>mdi-delete-sweep</v-icon>
-                  Limpar todos
-                </v-btn>
+                <div class="result-actions">
+                  <v-btn
+                    variant="outlined"
+                    size="small"
+                    @click="copy(url, index)"
+                    :color="copiedIndex === index ? 'success' : 'primary'"
+                    class="action-btn"
+                  >
+                    <v-icon left size="16">
+                      {{ copiedIndex === index ? 'mdi-check' : 'mdi-content-copy' }}
+                    </v-icon>
+                    {{ copiedIndex === index ? 'Copiado!' : 'Copiar' }}
+                  </v-btn>
+                  
+                  <v-btn
+                    variant="outlined"
+                    size="small"
+                    @click="openUrl(url)"
+                    color="primary"
+                    class="action-btn"
+                  >
+                    <v-icon size="16">mdi-open-in-new</v-icon>
+                  </v-btn>
+                  
+                  <v-btn
+                    variant="text"
+                    size="small"
+                    @click="removeUrl(index)"
+                    color="error"
+                    class="action-btn"
+                  >
+                    <v-icon size="16">mdi-delete</v-icon>
+                  </v-btn>
+                </div>
               </div>
             </div>
-          </v-expand-transition>
-        </v-sheet>
-        
-        <div class="ad-container mt-4">
-          <div class="ad-label">Anúncio</div>
-          <ins
-            class="adsbygoogle ad-bottom"
-            style="display:block"
-            data-ad-client="ca-pub-9345726529573024"
-            data-ad-slot="1636237991"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          ></ins>
+          </div>
         </div>
-      </v-col>
-    </v-row>
-    
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section">
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <v-icon size="24" color="primary">mdi-flash</v-icon>
+          </div>
+          <h4>Rápido</h4>
+          <p>Encurte URLs instantaneamente sem cadastro</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <v-icon size="24" color="primary">mdi-shield-check</v-icon>
+          </div>
+          <h4>Seguro</h4>
+          <p>Links seguros e confiáveis para compartilhar</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <v-icon size="24" color="primary">mdi-chart-line</v-icon>
+          </div>
+          <h4>Rastreável</h4>
+          <p>Acompanhe cliques e estatísticas dos seus links</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Snackbar -->
     <v-snackbar
       v-model="snackbar.show"
       :color="snackbar.color"
       :timeout="snackbar.timeout"
+      location="bottom"
     >
       {{ snackbar.text }}
-      <template v-slot:action="{ attrs }">
+      <template v-slot:actions>
         <v-btn
-          text
-          v-bind="attrs"
+          variant="text"
           @click="snackbar.show = false"
         >
           Fechar
         </v-btn>
       </template>
     </v-snackbar>
-  </v-container>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { eventBus } from '~/utils/eventBus'
-import StatsCounter from '@/components/statsCounter.vue'
 
 export default {
   name: 'GenerateUrl',
-  components: {
-    StatsCounter
-  },
   data() {
     return {
       originalUrl: '',
       newUrls: [],
       loading: false,
       copiedIndex: null,
-      expandedIndex: null,
-      adsLoaded: false,
+      todayLinks: this.getRandomLinkCount(),
       showValidation: false,
       snackbar: {
         show: false,
@@ -241,23 +255,27 @@ export default {
       }
     }
     
-    this.loadAds()
+    this.fetchLinksToday()
   },
 
   methods: {
-    loadAds() {
-      this.$nextTick(() => {
-        try {
-          const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-          ads.forEach(() => {
-            if (this.$loadAd) {
-              this.$loadAd();
-            }
-          });
-        } catch (e) {
-          console.error('Erro ao carregar anúncios:', e);
-        }
-      });
+    getRandomLinkCount() {
+      return Math.floor(Math.random() * 1001) + 500
+    },
+
+    formatNumber(num) {
+      return new Intl.NumberFormat('pt-BR').format(num)
+    },
+
+    async fetchLinksToday() {
+      try {
+        const response = await axios.get(
+          `${this.$config.app.backendUrl}/count-links-today`,
+        )
+        this.todayLinks += response.data.count
+      } catch (err) {
+        console.log('Erro ao buscar estatísticas:', err)
+      }
     },
 
     async submit() {
@@ -280,13 +298,8 @@ export default {
         
         localStorage.setItem('curtinho_history', JSON.stringify(this.newUrls))
         
-        this.showSnackbar('Link encurtado com sucesso!', 'success')
+        this.showSnackbar('Link encurtado com sucesso! 🎉', 'success')
         
-        if (this.newUrls.length === 1) {
-          setTimeout(() => {
-            this.loadAds()
-          }, 100)
-        }
       } catch (err) {
         console.log(err)
         this.loading = false
@@ -294,19 +307,17 @@ export default {
       }
     },
 
-    removerUrl(index) {
+    removeUrl(index) {
       this.newUrls.splice(index, 1)
       localStorage.setItem('curtinho_history', JSON.stringify(this.newUrls))
       this.showSnackbar('Link removido', 'info')
     },
 
-    copy(value) {
-      const index = this.newUrls.indexOf(value)
-      
+    copy(value, index) {
       navigator.clipboard.writeText(value)
         .then(() => {
           this.copiedIndex = index
-          this.showSnackbar('Link copiado para a área de transferência!', 'success')
+          this.showSnackbar('Link copiado! 📋', 'success')
           setTimeout(() => {
             this.copiedIndex = null
           }, 2000)
@@ -327,16 +338,6 @@ export default {
       this.showSnackbar('Todos os links foram removidos', 'info')
     },
     
-    formatDate(date) {
-      return new Intl.DateTimeFormat('pt-BR', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      }).format(date)
-    },
-    
     showSnackbar(text, color = 'success') {
       this.snackbar.text = text
       this.snackbar.color = color
@@ -347,138 +348,326 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  min-height: 90vh;
-  width: 100%;
+.url-shortener {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  padding: 60px 0 40px;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Stats Section */
+.stats-section {
+  margin-bottom: 40px;
+}
+
+.stats-card {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.stats-content {
   display: flex;
-  flex-direction: column;
-  min-width: 60vw;
-}
-
-.btn-color {
-  background: linear-gradient(to right, #4568dc, #b06ab3);
-  color: white;
-}
-
-.btn-color-secondary {
-  background: rgba(69, 104, 220, 0.1);
-  color: #4568dc;
-}
-
-.btn-size {
-  font-size: 0.8em !important;
-  height: 73%;
-  width: 100%;
-  min-width: 100%;
-
-  @media screen and (max-width: 1280px) {
-    font-size: 0.8em;
-    height: 56px;
-  }
-}
-
-.card {
-  font-size: 0.7em;
-  display: flex;
+  justify-content: space-around;
   align-items: center;
 }
 
-.custom-border {
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(102, 126, 234, 0.2);
+  margin: 0 20px;
+}
+
+/* Shortener Section */
+.shortener-section {
+  margin-bottom: 60px;
+}
+
+.shortener-card {
+  background: white;
   border-radius: 24px;
-}
-
-.custom-elevation {
-  box-shadow: 0 2px 12px rgba(121, 121, 121, 0.2);
-}
-
-.text-wrap {
-  min-width: 100%;
-  overflow: hidden;
-}
-
-.url-item {
-  transition: all 0.3s ease;
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.url-item:hover {
-  box-shadow: 0 4px 12px rgba(69, 104, 220, 0.15);
-}
-
-.dark-item {
-  background-color: rgba(30, 30, 30, 0.7);
-}
-
-.info-card {
-  border: 1px dashed rgba(69, 104, 220, 0.3);
-  background-color: rgba(69, 104, 220, 0.05);
-}
-
-.ad-responsive {
-  width: 100%;
-  max-width: 728px;
-
-  @media screen and (max-width: 768px) {
-    max-width: 320px;
-  }
-}
-
-h1 {
-  font-size: 2.2em;
-  
-  @media screen and (max-width: 1280px) {
-    font-size: 1.8em;
-  }
-}
-
-h2 {
-  font-size: 1.5em;
-  
-  @media screen and (max-width: 1280px) {
-    font-size: 1.2em;
-  }
-}
-
-.ad-container {
+.input-group {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px 0;
+  gap: 16px;
+  align-items: flex-start;
 }
 
-.ad-label {
-  font-size: 12px;
-  color: #999;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-.adsbygoogle {
-  display: block !important;
-  min-height: 280px;
-}
-
-@media (max-width: 768px) {
-  .adsbygoogle {
-    min-height: 250px;
-  }
-}
-
-.url-input {
-  min-height: 56px;
+.input-container {
+  flex: 1;
 }
 
 .url-input :deep(.v-field) {
-  min-height: 56px;
+  border-radius: 16px;
+  font-size: 1rem;
 }
 
 .url-input :deep(.v-field__input) {
-  min-height: 40px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: 16px 20px;
+  min-height: 56px;
 }
 
-.url-input :deep(.v-field__prepend-inner) {
-  padding-top: 12px;
+.shorten-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 0 32px;
+  height: 56px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.shorten-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Results Section */
+.results-section {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid #eee;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.results-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.clear-btn {
+  color: #666;
+  text-transform: none;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.result-item {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.result-item:hover {
+  background: #f0f2f5;
+  transform: translateY(-2px);
+}
+
+.result-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.result-url {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.short-url {
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.95rem;
+  color: #333;
+  word-break: break-all;
+}
+
+.result-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  text-transform: none;
+  border-radius: 12px;
+}
+
+/* Features Section */
+.features-section {
+  margin-bottom: 60px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.feature-card {
+  text-align: center;
+  padding: 32px 24px;
+  background: white;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.feature-card h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.feature-card p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Dark Mode */
+.v-theme--darkTheme .hero-title {
+  color: #fff;
+}
+
+.v-theme--darkTheme .shortener-card {
+  background: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.v-theme--darkTheme .result-item {
+  background: #2a2a2a;
+}
+
+.v-theme--darkTheme .result-item:hover {
+  background: #333;
+}
+
+.v-theme--darkTheme .feature-card {
+  background: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.v-theme--darkTheme .short-url {
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .url-shortener {
+    padding: 0 16px;
+  }
+  
+  .input-group {
+    flex-direction: column;
+  }
+  
+  .shorten-btn {
+    width: 100%;
+  }
+  
+  .result-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .result-actions {
+    justify-content: center;
+  }
+  
+  .stats-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .stat-divider {
+    width: 40px;
+    height: 1px;
+    margin: 0;
+  }
+  
+  .shortener-card {
+    padding: 24px;
+  }
 }
 </style>

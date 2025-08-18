@@ -5,16 +5,16 @@ import { createVuetify, type ThemeDefinition } from "vuetify";
 const lightTheme: ThemeDefinition = {
   dark: false,
   colors: {
-    primary: "#4568dc",
-    secondary: "#b06ab3",
-    accent: "#8c9eff",
+    primary: "#667eea",
+    secondary: "#764ba2",
+    accent: "#f093fb",
     error: "#ff5252",
     info: "#2196f3",
     success: "#4caf50",
     warning: "#ffc107",
     "on-primary": "#ffffff",
     "on-secondary": "#ffffff",
-    background: "#ffffff",
+    background: "#fafafa",
     surface: "#ffffff",
   },
 };
@@ -22,9 +22,9 @@ const lightTheme: ThemeDefinition = {
 const darkTheme: ThemeDefinition = {
   dark: true,
   colors: {
-    primary: "#5d7ce4",
-    secondary: "#c07ec0",
-    accent: "#a2b0ff",
+    primary: "#667eea",
+    secondary: "#764ba2",
+    accent: "#f093fb",
     error: "#ff5252",
     info: "#2196f3",
     success: "#4caf50",
@@ -32,7 +32,7 @@ const darkTheme: ThemeDefinition = {
     "on-primary": "#ffffff",
     "on-secondary": "#ffffff",
     background: "#121212",
-    surface: "#121212",
+    surface: "#1e1e1e",
   },
 };
 
@@ -47,14 +47,17 @@ export default defineNuxtPlugin((app) => {
     },
     defaults: {
       VBtn: {
-        rounded: true,
+        rounded: "lg",
+        elevation: 0,
       },
       VCard: {
-        rounded: "lg",
+        rounded: "xl",
+        elevation: 2,
       },
       VTextField: {
         variant: "outlined",
         density: "comfortable",
+        rounded: "lg",
       },
     },
   });

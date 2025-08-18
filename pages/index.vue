@@ -1,82 +1,69 @@
 <template>
   <v-app>
     <AppBar />
-    <v-main>
-      <v-container fluid class="px-0 py-0">
-        <v-row no-gutters>
-          <v-col cols="2" class="d-none d-lg-flex justify-center">
-            <div class="sticky-ad">
-              <div class="ad-container">
-                <div class="ad-label" align-center>Anúncio</div>
-                <ins
-                  class="adsbygoogle"
-                  style="display:block"
-                  data-ad-client="ca-pub-9345726529573024"
-                  data-ad-slot="6805352939"
-                  data-ad-format="vertical"
-                  data-full-width-responsive="true"
-                ></ins>
-              </div>
-            </div>
-          </v-col>
-          
-          <v-col cols="12" lg="8">
-            <v-container class="content">
-              <v-row class="d-flex flex-column">
-                <v-col>
-                  <GenerateUrl />
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-col>
-          
-          <v-col cols="2" class="d-none d-lg-flex">
-            <div class="sticky-ad">
-              <div class="ad-container">
-                <div class="ad-label">Anúncio</div>
-                <ins
-                  class="adsbygoogle"
-                  style="display:block"
-                  data-ad-client="ca-pub-9345726529573024"
-                  data-ad-slot="6351725664"
-                  data-ad-format="vertical"
-                  data-full-width-responsive="true"
-                ></ins>
-              </div>
-            </div>
-          </v-col>
-
-        </v-row>
-      </v-container>
+    <v-main class="main-content">
+      <GenerateUrl />
     </v-main>
     
-    <v-footer app padless>
-      <v-card flat tile width="100%" class="text-center">
-        <!-- <AdSense 
-          v-if="showFooterAd"
-          adId="ad-before-footer" 
-          height="90" 
-          width="728" 
-          format="horizontal" 
-          class="mx-auto my-2 ad-responsive"
-        />
+    <v-footer class="footer" padless>
+      <v-container>
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <v-icon size="24" color="primary">mdi-link-variant</v-icon>
+              <span class="footer-title">Curtinho</span>
+            </div>
+            <p class="footer-description">
+              O encurtador de URLs mais simples e rápido do Brasil
+            </p>
+          </div>
+          
+          <div class="footer-links">
+            <div class="link-group">
+              <h4>Produto</h4>
+              <a href="#" class="footer-link">Como funciona</a>
+              <a href="#" class="footer-link">API</a>
+              <a href="#" class="footer-link">Estatísticas</a>
+            </div>
+            
+            <div class="link-group">
+              <h4>Suporte</h4>
+              <a href="#" class="footer-link">Central de Ajuda</a>
+              <a href="#" class="footer-link">Contato</a>
+              <a href="#" class="footer-link">Status</a>
+            </div>
+            
+            <div class="link-group">
+              <h4>Legal</h4>
+              <a href="#" class="footer-link">Privacidade</a>
+              <a href="#" class="footer-link">Termos</a>
+              <a href="#" class="footer-link">Cookies</a>
+            </div>
+          </div>
+        </div>
         
-        <v-card-text>
-          <v-btn
-            v-for="icon in socialIcons"
-            :key="icon.icon"
-            class="mx-2"
-            icon
-            color="primary"
-          >
-            <v-icon>{{ icon.icon }}</v-icon>
-          </v-btn>
-        </v-card-text> -->
-        <v-divider></v-divider>
-        <v-card-text class="text-caption">
-          {{ new Date().getFullYear() }} — <strong>Curtinho</strong> | Encurtador de URLs simples e rápido
-        </v-card-text>
-      </v-card>
+        <v-divider class="my-4"></v-divider>
+        
+        <div class="footer-bottom">
+          <p class="copyright">
+            © {{ new Date().getFullYear() }} Curtinho.com - Todos os direitos reservados
+          </p>
+          <div class="social-links">
+            <v-btn
+              v-for="social in socialLinks"
+              :key="social.icon"
+              :href="social.url"
+              target="_blank"
+              icon
+              variant="text"
+              size="small"
+              class="social-btn"
+            >
+              <v-icon size="20">{{ social.icon }}</v-icon>
+            </v-btn>
+          </div>
+        </div>
+      </v-container>
     </v-footer>
   </v-app>
 </template>
@@ -93,82 +80,138 @@ export default {
   },
   data() {
     return {
-      socialIcons: [
-        { icon: 'mdi-facebook' },
-        { icon: 'mdi-twitter' },
-        { icon: 'mdi-instagram' },
-        { icon: 'mdi-linkedin' }
-      ],
+      socialLinks: [
+        { icon: 'mdi-twitter', url: 'https://twitter.com' },
+        { icon: 'mdi-instagram', url: 'https://instagram.com' },
+        { icon: 'mdi-linkedin', url: 'https://linkedin.com' },
+        { icon: 'mdi-github', url: 'https://github.com' }
+      ]
     }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.loadSideAds();
-    });
-  },
- 
-  methods: {
-    loadSideAds() {
-      this.$nextTick(() => {
-        try {
-          const ads = document.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])');
-          ads.forEach(() => {
-            if (window.$loadAd) {
-              window.$loadAd();
-            }
-          });
-        } catch (e) {
-          console.error('Erro ao carregar anúncios laterais:', e);
-        }
-      });
-    },
-    
-  
   }
 }
 </script>
 
 <style scoped>
-.content {
-  width: 100%;
-  padding-bottom: 80px; 
+.main-content {
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding-top: 0;
 }
 
-.sticky-ad {
-  position: sticky;
-  top: 80px;
-  height: auto;
-  min-height: 600px;
-  padding: 16px 12px;
+.footer {
+  background: #1a1a1a;
+  color: white;
+  margin-top: auto;
 }
 
-.ad-responsive {
-  width: 100%;
-  max-width: 728px;
-
-  @media screen and (max-width: 768px) {
-    max-width: 320px;
-  }
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+  padding: 48px 0 24px;
 }
 
-.ad-container {
+.footer-brand {
+  max-width: 300px;
+}
+
+.footer-logo {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin: 20px 0;
-  width: 100%;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-.ad-label {
-  font-size: 12px;
-  color: #999;
+.footer-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footer-description {
+  color: #ccc;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.link-group h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: white;
+}
+
+.footer-link {
+  display: block;
+  color: #ccc;
+  text-decoration: none;
   margin-bottom: 8px;
-  text-transform: uppercase;
+  transition: color 0.3s ease;
 }
 
-.adsbygoogle {
-  display: block !important;
-  width: 160px;
-  height: 600px;
+.footer-link:hover {
+  color: #667eea;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.copyright {
+  color: #999;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 8px;
+}
+
+.social-btn {
+  color: #ccc;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  color: #667eea;
+  transform: translateY(-2px);
+}
+
+/* Dark Mode */
+.v-theme--darkTheme .main-content {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    text-align: center;
+  }
+  
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
 }
 </style>
