@@ -1,36 +1,26 @@
 <template>
-  <v-app-bar 
-    elevation="0" 
+  <v-app-bar
+    elevation="0"
     class="app-header"
-    height="80"
+    height="64"
     :class="{ 'header-dark': isDarkMode }"
   >
-    <v-container class="d-flex align-center px-6">
-      <div class="d-flex align-center">
-        <div class="logo-container">
-          <div class="logo-icon">
-            <v-icon size="32" color="primary">mdi-link-variant</v-icon>
-          </div>
-          <div class="logo-text">
-            <h1 class="logo-title">Curtinho</h1>
-            <p class="logo-subtitle">.com</p>
-          </div>
-        </div>
+    <v-container class="d-flex align-center">
+      <div class="logo">
+        curtinho.com
       </div>
-      
+
       <v-spacer></v-spacer>
-      
-      <div class="header-actions">
-        <v-btn 
-          icon 
-          variant="text" 
-          @click="toggleTheme" 
-          class="theme-toggle"
-          size="large"
-        >
-          <v-icon>{{ isDarkMode ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
-        </v-btn>
-      </div>
+
+      <v-btn
+        icon
+        variant="text"
+        @click="toggleTheme"
+        class="theme-toggle"
+        size="small"
+      >
+        <v-icon size="20">{{ isDarkMode ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' }}</v-icon>
+      </v-btn>
     </v-container>
   </v-app-bar>
 </template>
@@ -65,73 +55,41 @@ export default {
 
 <style scoped>
 .app-header {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e0e0e0;
+  transition: all 0.2s ease;
 }
 
 .header-dark {
-  background: rgba(18, 18, 18, 0.95) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.8) !important;
+  border-bottom: 1px solid #333;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.logo {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
 }
 
-.logo-icon {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.logo-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.logo-subtitle {
-  font-size: 14px;
-  color: #666;
-  margin: 0;
-  margin-top: -2px;
+.header-dark .logo {
+  color: #fff;
 }
 
 .theme-toggle {
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  color: #666;
 }
 
 .theme-toggle:hover {
-  background: rgba(102, 126, 234, 0.1);
+  color: #000;
 }
 
-@media (max-width: 768px) {
-  .logo-title {
-    font-size: 20px;
-  }
-  
-  .logo-subtitle {
-    font-size: 12px;
-  }
+.header-dark .theme-toggle {
+  color: #999;
+}
+
+.header-dark .theme-toggle:hover {
+  color: #fff;
 }
 </style>
