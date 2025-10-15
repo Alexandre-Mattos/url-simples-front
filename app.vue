@@ -12,15 +12,13 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   margin: 0;
   padding: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .v-application {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
 
 html {
@@ -28,19 +26,29 @@ html {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 3px;
+  background: #c1c1c1;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #999;
+  background: #a8a8a8;
+}
+
+.v-btn:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.v-text-field:focus-within {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
 }
 </style>
