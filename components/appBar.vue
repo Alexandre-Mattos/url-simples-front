@@ -65,32 +65,44 @@ export default {
 
 <style scoped>
 .app-header {
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header-dark {
-  background: rgba(18, 18, 18, 0.95) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(26, 32, 44, 0.98) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .logo-container {
   display: flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.logo-container:hover {
+  transform: translateY(-1px);
 }
 
 .logo-icon {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  transition: all 0.3s ease;
+}
+
+.logo-container:hover .logo-icon {
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  transform: scale(1.05);
 }
 
 .logo-text {
@@ -101,19 +113,24 @@ export default {
 
 .logo-title {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 800;
   margin: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .logo-subtitle {
-  font-size: 14px;
-  color: #666;
+  font-size: 12px;
+  color: #64748b;
   margin: 0;
-  margin-top: -2px;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.header-dark .logo-subtitle {
+  color: #94a3b8;
 }
 
 .theme-toggle {
@@ -122,7 +139,8 @@ export default {
 }
 
 .theme-toggle:hover {
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(37, 99, 235, 0.1);
+  transform: rotate(20deg);
 }
 
 @media (max-width: 768px) {
@@ -131,7 +149,12 @@ export default {
   }
 
   .logo-subtitle {
-    font-size: 12px;
+    font-size: 11px;
+  }
+
+  .logo-icon {
+    width: 42px;
+    height: 42px;
   }
 }
 </style>

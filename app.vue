@@ -43,12 +43,12 @@ html {
 }
 
 .v-btn:focus-visible {
-  outline: 2px solid #667eea;
+  outline: 2px solid #2563eb;
   outline-offset: 2px;
 }
 
 .v-text-field:focus-within {
-  outline: 2px solid #667eea;
+  outline: 2px solid #2563eb;
   outline-offset: 2px;
 }
 </style>

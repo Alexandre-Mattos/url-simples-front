@@ -363,7 +363,7 @@ export default {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -371,11 +371,13 @@ export default {
 
 .hero-subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: #64748b;
   margin-bottom: 0;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 .stats-section {
@@ -383,11 +385,17 @@ export default {
 }
 
 .stats-card {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(29, 78, 216, 0.05) 100%);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   border-radius: 20px;
-  padding: 24px;
+  padding: 32px 24px;
   backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08);
 }
 
 .stats-content {
@@ -402,24 +410,25 @@ export default {
 }
 
 .stat-number {
-  font-size: 2rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .stat-label {
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
 }
 
 .stat-divider {
   width: 1px;
-  height: 40px;
-  background: rgba(102, 126, 234, 0.2);
+  height: 50px;
+  background: rgba(37, 99, 235, 0.15);
   margin: 0 20px;
 }
 
@@ -430,9 +439,14 @@ export default {
 .shortener-card {
   background: white;
   border-radius: 24px;
-  padding: 32px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.shortener-card:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
 }
 
 .input-group {
@@ -456,19 +470,25 @@ export default {
 }
 
 .shorten-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: white;
   border-radius: 16px;
-  padding: 0 32px;
+  padding: 0 40px;
   height: 56px;
   font-weight: 600;
   text-transform: none;
   letter-spacing: 0;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .shorten-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.35);
+}
+
+.shorten-btn:active {
+  transform: translateY(-1px);
 }
 
 .results-section {
@@ -502,15 +522,18 @@ export default {
 }
 
 .result-item {
-  background: #f8f9fa;
+  background: #f8fafc;
   border-radius: 16px;
-  padding: 20px;
-  transition: all 0.3s ease;
+  padding: 20px 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .result-item:hover {
-  background: #f0f2f5;
+  background: #f1f5f9;
   transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
 }
 
 .result-content {
@@ -570,27 +593,33 @@ export default {
 }
 
 .feature-icon {
-  width: 56px;
-  height: 56px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(29, 78, 216, 0.08) 100%);
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 16px;
+  margin: 0 auto 20px;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(29, 78, 216, 0.12) 100%);
+  transform: scale(1.05);
 }
 
 .feature-card h4 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #333;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #1e293b;
 }
 
 .feature-card p {
-  color: #666;
+  color: #64748b;
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0;
 }
 
@@ -620,9 +649,35 @@ export default {
   color: #fff;
 }
 
+@media (max-width: 960px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .shortener-card {
+    padding: 32px 24px;
+  }
+}
+
 @media (max-width: 768px) {
   .url-shortener {
     padding: 0 16px;
+  }
+
+  .hero-section {
+    padding: 40px 0 30px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
   }
 
   .input-group {
@@ -640,7 +695,13 @@ export default {
   }
 
   .result-actions {
-    justify-content: center;
+    justify-content: stretch;
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    flex: 1;
+    min-width: 100px;
   }
 
   .stats-content {
@@ -649,13 +710,46 @@ export default {
   }
 
   .stat-divider {
-    width: 40px;
+    width: 60%;
     height: 1px;
-    margin: 0;
+    margin: 0 auto;
   }
 
   .shortener-card {
     padding: 24px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+
+  .shortener-card {
+    padding: 20px;
+  }
+
+  .results-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }
 </style>

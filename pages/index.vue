@@ -94,7 +94,7 @@ export default {
 <style scoped>
 .main-content {
   min-height: calc(100vh - 80px);
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
   padding-top: 0;
 }
 
@@ -124,8 +124,8 @@ export default {
 
 .footer-title {
   font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-weight: 800;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -159,7 +159,7 @@ export default {
 }
 
 .footer-link:hover {
-  color: #667eea;
+  color: #2563eb;
 }
 
 .footer-bottom {
@@ -186,13 +186,13 @@ export default {
 }
 
 .social-btn:hover {
-  color: #667eea;
+  color: #2563eb;
   transform: translateY(-2px);
 }
 
 /* Dark Mode */
 .v-theme--darkTheme .main-content {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
 /* Responsive */
