@@ -2,10 +2,10 @@
   <v-app-bar
     elevation="0"
     class="app-header"
-    height="80"
+    height="70"
     :class="{ 'header-dark': isDarkMode }"
   >
-    <v-container class="d-flex align-center px-6">
+    <v-container class="d-flex align-center px-4">
       <div class="d-flex align-center">
         <div class="logo-container">
           <div class="logo-icon">
@@ -89,8 +89,8 @@ export default {
 }
 
 .logo-icon {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   border-radius: 12px;
   display: flex;
@@ -112,7 +112,7 @@ export default {
 }
 
 .logo-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   margin: 0;
   background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);

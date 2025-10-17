@@ -93,7 +93,7 @@ export default {
 
 <style scoped>
 .main-content {
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 70px);
   background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
   padding-top: 0;
 }
