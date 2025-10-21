@@ -2,23 +2,19 @@
   <v-app-bar
     elevation="0"
     class="app-header"
-    height="70"
+    height="64"
     :class="{ 'header-dark': isDarkMode }"
   >
-    <v-container class="d-flex align-center px-4">
-      <div class="d-flex align-center">
-        <div class="logo-container">
-          <div class="logo-icon">
-            <v-icon size="32" color="primary">mdi-link-variant</v-icon>
-          </div>
-          <div class="logo-text">
-            <h1 class="logo-title">Curtinho</h1>
-            <p class="logo-subtitle">.com</p>
-          </div>
+    <v-container fluid class="d-flex align-center justify-space-between px-6">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <v-icon size="28" color="white">mdi-link-variant</v-icon>
+        </div>
+        <div class="logo-text">
+          <h1 class="logo-title">Curtinho</h1>
+          <p class="logo-subtitle">.com</p>
         </div>
       </div>
-
-      <v-spacer></v-spacer>
 
       <div class="header-actions">
         <v-btn
@@ -26,9 +22,9 @@
           variant="text"
           @click="toggleTheme"
           class="theme-toggle"
-          size="large"
+          size="small"
         >
-          <v-icon>{{ isDarkMode ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+          <v-icon size="20">{{ isDarkMode ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
         </v-btn>
       </div>
     </v-container>
@@ -65,21 +61,21 @@ export default {
 
 <style scoped>
 .app-header {
-  background: rgba(255, 255, 255, 0.98) !important;
+  background: rgba(0, 0, 0, 0.95) !important;
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header-dark {
-  background: rgba(26, 32, 44, 0.98) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.98) !important;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.3);
 }
 
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
@@ -89,19 +85,19 @@ export default {
 }
 
 .logo-icon {
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(236, 72, 153, 0.3);
   transition: all 0.3s ease;
 }
 
 .logo-container:hover .logo-icon {
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.8), 0 0 60px rgba(236, 72, 153, 0.5);
   transform: scale(1.05);
 }
 
@@ -112,49 +108,51 @@ export default {
 }
 
 .logo-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   margin: 0;
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .logo-subtitle {
-  font-size: 12px;
-  color: #64748b;
+  font-size: 11px;
+  color: #9ca3af;
   margin: 0;
   margin-top: 2px;
   font-weight: 500;
 }
 
 .header-dark .logo-subtitle {
-  color: #94a3b8;
+  color: #9ca3af;
 }
 
 .theme-toggle {
-  border-radius: 12px;
+  border-radius: 10px;
   transition: all 0.3s ease;
+  color: #9ca3af;
 }
 
 .theme-toggle:hover {
-  background: rgba(37, 99, 235, 0.1);
+  background: rgba(168, 85, 247, 0.2);
+  color: #a855f7;
   transform: rotate(20deg);
 }
 
 @media (max-width: 768px) {
   .logo-title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .logo-subtitle {
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .logo-icon {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
   }
 }
 </style>

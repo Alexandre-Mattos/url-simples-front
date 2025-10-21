@@ -93,13 +93,17 @@ export default {
 
 <style scoped>
 .main-content {
-  min-height: calc(100vh - 70px);
-  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+  min-height: calc(100vh - 64px);
+  background: #000000;
+  background-image:
+    radial-gradient(ellipse at top, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
   padding-top: 0;
 }
 
 .footer {
-  background: #1a1a1a;
+  background: #000000;
+  border-top: 1px solid rgba(168, 85, 247, 0.2);
   color: white;
   margin-top: auto;
 }
@@ -125,7 +129,7 @@ export default {
 .footer-title {
   font-size: 1.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -159,7 +163,7 @@ export default {
 }
 
 .footer-link:hover {
-  color: #2563eb;
+  color: #a855f7;
 }
 
 .footer-bottom {
@@ -186,13 +190,16 @@ export default {
 }
 
 .social-btn:hover {
-  color: #2563eb;
+  color: #a855f7;
   transform: translateY(-2px);
 }
 
 /* Dark Mode */
 .v-theme--darkTheme .main-content {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: #000000;
+  background-image:
+    radial-gradient(ellipse at top, rgba(168, 85, 247, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(236, 72, 153, 0.2) 0%, transparent 50%);
 }
 
 /* Responsive */

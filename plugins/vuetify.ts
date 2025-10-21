@@ -5,34 +5,34 @@ import { createVuetify, type ThemeDefinition } from "vuetify";
 const lightTheme: ThemeDefinition = {
   dark: false,
   colors: {
-    primary: "#2563eb",
-    secondary: "#1d4ed8",
-    accent: "#60a5fa",
+    primary: "#a855f7",
+    secondary: "#ec4899",
+    accent: "#f0abfc",
     error: "#ef4444",
-    info: "#3b82f6",
+    info: "#8b5cf6",
     success: "#10b981",
     warning: "#f59e0b",
     "on-primary": "#ffffff",
     "on-secondary": "#ffffff",
-    background: "#f8fafc",
-    surface: "#ffffff",
+    background: "#000000",
+    surface: "#0a0a0a",
   },
 };
 
 const darkTheme: ThemeDefinition = {
   dark: true,
   colors: {
-    primary: "#3b82f6",
-    secondary: "#2563eb",
-    accent: "#60a5fa",
+    primary: "#a855f7",
+    secondary: "#ec4899",
+    accent: "#f0abfc",
     error: "#ef4444",
-    info: "#3b82f6",
+    info: "#8b5cf6",
     success: "#10b981",
     warning: "#f59e0b",
     "on-primary": "#ffffff",
     "on-secondary": "#ffffff",
-    background: "#0f172a",
-    surface: "#1e293b",
+    background: "#000000",
+    surface: "#0a0a0a",
   },
 };
 
