@@ -46,12 +46,12 @@ export default {
 
 <style scoped>
 .main-content {
-  min-height: calc(100vh - 64px);
+  min-height: 100vh;
   background: #000000;
   background-image:
     radial-gradient(ellipse at top, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
     radial-gradient(ellipse at bottom, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
-  padding: 0;
+  padding: 40px 20px;
   display: flex;
   align-items: center;
 }
@@ -60,7 +60,7 @@ export default {
   background: #000000;
   border-top: 1px solid rgba(168, 85, 247, 0.2);
   color: white;
-  margin-top: auto;
+  margin-top: 0;
 }
 
 .footer-content {
@@ -118,13 +118,37 @@ export default {
 }
 
 /* Responsive */
+@media (max-width: 1366px) {
+  .main-content {
+    padding: 30px 20px;
+  }
+}
+
 @media (max-width: 768px) {
+  .main-content {
+    padding: 20px 16px;
+  }
+
   .footer-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 32px 0 16px;
     text-align: center;
+  }
+
+  .footer-brand {
+    max-width: 100%;
   }
 
   .footer-bottom {
     text-align: center;
+    padding: 16px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 20px 12px;
   }
 }
 
