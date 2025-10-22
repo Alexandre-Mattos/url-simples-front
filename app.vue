@@ -43,12 +43,29 @@ html {
 }
 
 .v-btn:focus-visible {
-  outline: 2px solid #a855f7;
-  outline-offset: 2px;
+  outline: none !important;
 }
 
-.v-text-field:focus-within {
-  outline: 2px solid #a855f7;
-  outline-offset: 2px;
+/* Remove outline/box-shadow feio de todos os inputs Vuetify */
+.v-field--focused {
+  box-shadow: none !important;
+}
+
+.v-field__outline {
+  --v-field-border-opacity: 0.3;
+}
+
+.v-field--focused .v-field__outline {
+  --v-field-border-width: 2px;
+  --v-field-border-opacity: 0.6;
+}
+
+/* Remove outline de text fields */
+.v-text-field input:focus {
+  outline: none !important;
+}
+
+.v-textarea textarea:focus {
+  outline: none !important;
 }
 </style>

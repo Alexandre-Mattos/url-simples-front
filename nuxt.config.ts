@@ -1,6 +1,7 @@
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 export default defineNuxtConfig({
+  compatibilityDate: "2025-10-21",
   app: {
     head: {},
   },
@@ -8,13 +9,13 @@ export default defineNuxtConfig({
     transpile: ["vuetify"],
   },
   runtimeConfig: {
-    app: {
-      backendUrl: process.env.BACKEND_URL,
-      adsenseClient: process.env.ADSENSE_CLIENT_ID,
-    },
     public: {
+      backendUrl: process.env.BACKEND_URL || "http://localhost:3001",
       adsenseClient: process.env.ADSENSE_CLIENT_ID,
     },
+  },
+  devtools: {
+    enabled: false,
   },
   modules: [
     (_options, nuxt) => {
@@ -30,5 +31,11 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
+    optimizeDeps: {
+      include: ["axios"],
+    },
+  },
+  nitro: {
+    compressPublicAssets: true,
   },
 });

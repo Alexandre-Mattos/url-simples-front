@@ -6,26 +6,74 @@
     :class="{ 'header-dark': isDarkMode }"
   >
     <v-container fluid class="d-flex align-center justify-space-between px-6">
-      <div class="logo-container">
-        <div class="logo-icon">
-          <v-icon size="28" color="white">mdi-link-variant</v-icon>
+      <NuxtLink :to="authenticated ? '/dashboard' : '/'" class="logo-link">
+        <div class="logo-container">
+          <div class="logo-icon">
+            <v-icon size="28" color="white">mdi-link-variant</v-icon>
+          </div>
+          <div class="logo-text">
+            <h1 class="logo-title">Curtinho</h1>
+            <p class="logo-subtitle">.com</p>
+          </div>
         </div>
-        <div class="logo-text">
-          <h1 class="logo-title">Curtinho</h1>
-          <p class="logo-subtitle">.com</p>
-        </div>
-      </div>
+      </NuxtLink>
 
       <div class="header-actions">
-        <v-btn
-          icon
-          variant="text"
-          @click="toggleTheme"
-          class="theme-toggle"
-          size="small"
-        >
-          <v-icon size="20">{{ isDarkMode ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
-        </v-btn>
+        <template v-if="authenticated">
+          <v-btn
+            variant="text"
+            class="nav-btn"
+            size="small"
+            to="/dashboard"
+          >
+            <v-icon left size="18">mdi-view-dashboard</v-icon>
+            Dashboard
+          </v-btn>
+          <v-menu>
+            <template v-slot:activator="{ props }">
+              <v-btn
+                icon
+                variant="text"
+                v-bind="props"
+                class="user-btn"
+              >
+                <v-icon>mdi-account-circle</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item to="/profile">
+                <template v-slot:prepend>
+                  <v-icon>mdi-account</v-icon>
+                </template>
+                <v-list-item-title>Perfil</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="$emit('logout')">
+                <template v-slot:prepend>
+                  <v-icon>mdi-logout</v-icon>
+                </template>
+                <v-list-item-title>Sair</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </template>
+        <template v-else>
+          <v-btn
+            variant="text"
+            class="login-btn"
+            size="small"
+            to="/login"
+          >
+            Login
+          </v-btn>
+          <v-btn
+            class="register-btn"
+            size="small"
+            elevation="0"
+            to="/register"
+          >
+            Registrar-se
+          </v-btn>
+        </template>
       </div>
     </v-container>
   </v-app-bar>
@@ -36,6 +84,12 @@ import { eventBus } from '~/utils/eventBus'
 
 export default {
   name: 'AppBar',
+  props: {
+    authenticated: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
     isDarkMode() {
       return eventBus.isDarkMode
@@ -47,11 +101,6 @@ export default {
     this.applyTheme()
   },
   methods: {
-    toggleTheme() {
-      eventBus.setDarkMode(!eventBus.isDarkMode)
-      localStorage.setItem('darkMode', eventBus.isDarkMode)
-      this.applyTheme()
-    },
     applyTheme() {
       this.$vuetify.theme.global.name = eventBus.isDarkMode ? 'darkTheme' : 'lightTheme'
     }
@@ -92,12 +141,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(236, 72, 153, 0.3);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.3), 0 0 20px rgba(236, 72, 153, 0.2);
   transition: all 0.3s ease;
 }
 
 .logo-container:hover .logo-icon {
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.8), 0 0 60px rgba(236, 72, 153, 0.5);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.5), 0 0 30px rgba(236, 72, 153, 0.3);
   transform: scale(1.05);
 }
 
@@ -129,16 +178,67 @@ export default {
   color: #9ca3af;
 }
 
-.theme-toggle {
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  color: #9ca3af;
+.logo-link {
+  text-decoration: none;
 }
 
-.theme-toggle:hover {
-  background: rgba(168, 85, 247, 0.2);
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.nav-btn {
+  color: #e5e7eb;
+  text-transform: none;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: rgba(168, 85, 247, 0.15);
   color: #a855f7;
-  transform: rotate(20deg);
+}
+
+.user-btn {
+  color: #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.user-btn:hover {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+}
+
+.login-btn {
+  color: #e5e7eb;
+  text-transform: none;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 0 20px;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+}
+
+.register-btn {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  color: white;
+  text-transform: none;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 0 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+}
+
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 30px rgba(236, 72, 153, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -153,6 +253,25 @@ export default {
   .logo-icon {
     width: 36px;
     height: 36px;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .nav-btn {
+    padding: 0 12px;
+    font-size: 0.875rem;
+  }
+
+  .login-btn {
+    padding: 0 12px;
+    font-size: 0.875rem;
+  }
+
+  .register-btn {
+    padding: 0 16px;
+    font-size: 0.875rem;
   }
 }
 </style>

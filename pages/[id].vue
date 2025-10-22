@@ -8,7 +8,7 @@ export default {
 
   methods: {
     redirect() {
-      window.location.href = `${this.$config.app.backendUrl}/${this.$route.params.id}`
+      window.location.href = `${this.$config.public.backendUrl}/${this.$route.params.id}`
     },
   },
 }

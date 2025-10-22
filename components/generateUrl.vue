@@ -137,34 +137,6 @@
       </div>
     </div>
 
-    <div class="features-section">
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <v-icon size="24" color="primary">mdi-flash</v-icon>
-          </div>
-          <h4>Rápido</h4>
-          <p>Encurte URLs instantaneamente sem cadastro</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
-            <v-icon size="24" color="primary">mdi-shield-check</v-icon>
-          </div>
-          <h4>Seguro</h4>
-          <p>Links seguros e confiáveis para compartilhar</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
-            <v-icon size="24" color="primary">mdi-chart-line</v-icon>
-          </div>
-          <h4>Rastreável</h4>
-          <p>Acompanhe cliques e estatísticas dos seus links</p>
-        </div>
-      </div>
-    </div>
-
     <v-snackbar
       v-model="snackbar.show"
       :color="snackbar.color"
@@ -264,7 +236,7 @@ export default {
     async fetchLinksToday() {
       try {
         const response = await axios.get(
-          `${this.$config.app.backendUrl}/count-links-today`,
+          `${this.$config.public.backendUrl}/count-links-today`,
         )
         this.todayLinks += response.data.count
       } catch (err) {
@@ -280,7 +252,7 @@ export default {
 
       try {
         const response = await axios.post(
-          `${this.$config.app.backendUrl}/encurtar`,
+          `${this.$config.public.backendUrl}/encurtar`,
           {
             url: this.originalUrl,
           },
@@ -344,21 +316,27 @@ export default {
 
 <style scoped>
 .url-shortener {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  width: 100%;
+  padding-top: 40px;
 }
 
 .hero-section {
   text-align: center;
-  padding: 60px 0 40px;
+  padding: 60px 0 48px;
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
   line-height: 1.2;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   color: #ffffff;
   text-align: center;
 }
@@ -372,10 +350,10 @@ export default {
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #9ca3af;
   margin-bottom: 0;
-  max-width: 600px;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.6;
@@ -384,22 +362,22 @@ export default {
 }
 
 .stats-section {
-  margin-bottom: 40px;
+  margin-bottom: 48px;
 }
 
 .stats-card {
   background: rgba(10, 10, 10, 0.5);
   border: 1px solid rgba(168, 85, 247, 0.3);
   border-radius: 20px;
-  padding: 32px 24px;
+  padding: 40px 32px;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.1);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.08);
 }
 
 .stats-card:hover {
   border-color: rgba(168, 85, 247, 0.5);
-  box-shadow: 0 0 60px rgba(168, 85, 247, 0.2), 0 0 80px rgba(236, 72, 153, 0.1);
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.15), 0 0 40px rgba(236, 72, 153, 0.08);
 }
 
 .stats-content {
@@ -414,45 +392,45 @@ export default {
 }
 
 .stat-number {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 800;
   background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 8px;
-  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.5));
+  filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));
 }
 
 .stat-label {
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   color: #9ca3af;
   font-weight: 500;
 }
 
 .stat-divider {
   width: 1px;
-  height: 50px;
+  height: 60px;
   background: linear-gradient(180deg, transparent, rgba(168, 85, 247, 0.5), transparent);
   margin: 0 20px;
 }
 
 .shortener-section {
-  margin-bottom: 60px;
+  margin-bottom: 0;
 }
 
 .shortener-card {
   background: rgba(10, 10, 10, 0.6);
   border-radius: 24px;
-  padding: 40px;
-  box-shadow: 0 0 60px rgba(168, 85, 247, 0.15), 0 0 100px rgba(236, 72, 153, 0.1);
+  padding: 48px;
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.1), 0 0 50px rgba(236, 72, 153, 0.05);
   border: 1px solid rgba(168, 85, 247, 0.3);
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }
 
 .shortener-card:hover {
-  box-shadow: 0 0 80px rgba(168, 85, 247, 0.25), 0 0 120px rgba(236, 72, 153, 0.15);
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.15), 0 0 60px rgba(236, 72, 153, 0.08);
   border-color: rgba(168, 85, 247, 0.5);
 }
 
@@ -473,26 +451,27 @@ export default {
 
 .url-input :deep(.v-field__input) {
   padding: 16px 20px;
-  min-height: 56px;
+  min-height: 64px;
+  font-size: 1.05rem;
 }
 
 .shorten-btn {
   background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
   color: white;
   border-radius: 16px;
-  padding: 0 40px;
-  height: 56px;
+  padding: 0 48px;
+  height: 64px;
   font-weight: 600;
   text-transform: none;
   letter-spacing: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
 }
 
 .shorten-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 50px rgba(168, 85, 247, 0.6), 0 0 80px rgba(236, 72, 153, 0.4);
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.4), 0 0 40px rgba(236, 72, 153, 0.25);
 }
 
 .shorten-btn:active {
@@ -542,7 +521,7 @@ export default {
   background: rgba(20, 20, 20, 0.7);
   transform: translateY(-2px);
   border-color: rgba(168, 85, 247, 0.4);
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
 }
 
 .result-content {
@@ -577,65 +556,6 @@ export default {
   border-radius: 12px;
 }
 
-.features-section {
-  margin-bottom: 60px;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-}
-
-.feature-card {
-  text-align: center;
-  padding: 32px 24px;
-  background: rgba(10, 10, 10, 0.5);
-  border-radius: 20px;
-  border: 1px solid rgba(168, 85, 247, 0.2);
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.2);
-  border-color: rgba(168, 85, 247, 0.4);
-}
-
-.feature-icon {
-  width: 64px;
-  height: 64px;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
-}
-
-.feature-card:hover .feature-icon {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(236, 72, 153, 0.25) 100%);
-  transform: scale(1.05);
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.4);
-}
-
-.feature-card h4 {
-  font-size: 1.125rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: #ffffff;
-}
-
-.feature-card p {
-  color: #9ca3af;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin: 0;
-}
-
 .v-theme--darkTheme .hero-title {
   color: #fff;
 }
@@ -651,11 +571,6 @@ export default {
 
 .v-theme--darkTheme .result-item:hover {
   background: rgba(20, 20, 20, 0.9);
-}
-
-.v-theme--darkTheme .feature-card {
-  background: rgba(10, 10, 10, 0.7);
-  border-color: rgba(168, 85, 247, 0.3);
 }
 
 .v-theme--darkTheme .short-url {
@@ -679,18 +594,33 @@ export default {
 @media (max-width: 768px) {
   .url-shortener {
     padding: 0 16px;
+    min-height: 100%;
+    padding-top: 20px;
   }
 
   .hero-section {
-    padding: 40px 0 30px;
+    padding: 40px 0 32px;
   }
 
   .hero-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
+    margin-bottom: 16px;
   }
 
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: 1.05rem;
+  }
+
+  .stats-section {
+    margin-bottom: 32px;
+  }
+
+  .stats-card {
+    padding: 28px 20px;
+  }
+
+  .stat-number {
+    font-size: 2.2rem;
   }
 
   .input-group {
@@ -699,6 +629,14 @@ export default {
 
   .shorten-btn {
     width: 100%;
+    height: 56px;
+    font-size: 1rem;
+    padding: 0 32px;
+  }
+
+  .url-input :deep(.v-field__input) {
+    min-height: 56px;
+    font-size: 1rem;
   }
 
   .result-content {
@@ -729,18 +667,13 @@ export default {
   }
 
   .shortener-card {
-    padding: 24px;
-  }
-
-  .features-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    padding: 32px 24px;
   }
 }
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: 1.75rem;
+    font-size: 1.9rem;
   }
 
   .hero-subtitle {
@@ -756,7 +689,7 @@ export default {
   }
 
   .shortener-card {
-    padding: 20px;
+    padding: 24px 20px;
   }
 
   .results-header {
